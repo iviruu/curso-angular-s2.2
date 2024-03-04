@@ -86,7 +86,6 @@ function buy(id) {
         cart.push({...objeto, cantidad : 1, conDescuento : 0});
     }
     applyPromotionsCart(cart)
-    console.log(cart)
 }
 
 
@@ -120,9 +119,7 @@ function applyPromotionsCart(cart) {
 
 // Exercise 5
 function printCart() {
-    console.log(cart)
     listaCompra.innerHTML= ''
-    console.log(listaCompra)
     cart.forEach(producto => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -140,7 +137,16 @@ function printCart() {
 
 // Exercise 7
 function removeFromCart(id) {
-
+    let indiceEnCarrito = cart.findIndex(elementoCart => elementoCart.id === id);
+    
+    if (indiceEnCarrito !== -1){
+        if (cart[indiceEnCarrito].cantidad > 1) {
+            cart[indiceEnCarrito].cantidad--;
+    }
+        else {
+        cart.splice(indiceEnCarrito,1);
+        }
+    }
 }
 
 function open_modal() {
