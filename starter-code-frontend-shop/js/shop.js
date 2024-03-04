@@ -109,7 +109,8 @@ function calculateTotal(cart) {
 function applyPromotionsCart(cart) {
     cart.forEach(elemento => {
         if (elemento.offer && elemento.cantidad >= elemento.offer.number){
-            elemento.conDescuento= elemento.price - (elemento.price * elemento.offer.percent/100)
+            conDescuento1= elemento.price - (elemento.price * elemento.offer.percent/100)
+            elemento.conDescuento= parseFloat(conDescuento1.toFixed(2))
         }
         else {
             elemento.conDescuento = elemento.price

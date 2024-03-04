@@ -13,62 +13,63 @@ const expresiones ={
 	fAddress:/^.{3,}$/
 }
 
-var error = 0;
+
 
 const validarForm = (e) =>{
     switch(e.target.id) {
 		case 'fName' :
 			if(expresiones.fName.test(e.target.value)){
 				fName.classList.remove("is-invalid");
-				error= 0;
+				fName.classList.add("is-valid");
+				
 			} else{
 				fName.classList.add("is-invalid");
-				error= 1;
+				
 			}
 		break;
 		case 'fLastN' :
 			if(expresiones.fLastN.test(e.target.value)){
 				fLastN.classList.remove("is-invalid");
-				error= 0;
+				fLastN.classList.add("is-valid");
 			} else{
 				fLastN.classList.add("is-invalid");
-				error=1;
+				
 			}
 		break;
 		case 'fEmail' :
 			if(expresiones.fEmail.test(e.target.value)){
 				fEmail.classList.remove("is-invalid");
-				error= 0;
+				fEmail.classList.add("is-valid");
 			} else{
 				fEmail.classList.add("is-invalid");
-				error=1;
+				
 			}
 		break;
 		case 'fPassword' :
 			if(expresiones.fPassword.test(e.target.value)){
 				fPassword.classList.remove("is-invalid");
-				error= 0;
+				fPassword.classList.add("is-valid");
 			} else{
 				fPassword.classList.add("is-invalid");
-				error=1;
+				
 			}
 		break;
 		case 'fPhone' :
 			if(expresiones.fPhone.test(e.target.value)){
 				fPhone.classList.remove("is-invalid");
-				error= 0;
+				fPhone.classList.add("is-valid");
 			} else{
 				fPhone.classList.add("is-invalid");
-				error=1;
+				
 			}
 		break;
 		case 'fAddress' :
 			if(expresiones.fAddress.test(e.target.value)){
 				fAddress.classList.remove("is-invalid");
-				error= 0;
+				fAddress.classList.add("is-valid");
 			} else{
 				fAddress.classList.add("is-invalid");
-				error=1;
+				
 			}
 		break;
 	}
@@ -89,11 +90,25 @@ inputs.forEach((input)=>{
 
 
 
-function validate() {
-	if(error>0){
-		alert("Hay errores en el formulario.");
-	}else{
-		alert("Formulario enviado correctamente.");
-	}
 
-}
+	function validate(event) {
+		event.preventDefault(); 
+		const inputs = document.querySelectorAll('.form input');
+		
+		const allValid = Array.from(inputs).every(input => input.classList.contains('is-valid'));
+		
+		const noInvalid = Array.from(inputs).every(input => !input.classList.contains('is-invalid'));
+	
+		if(allValid && noInvalid) {
+			alert("Formulario enviado correctamente.");
+			setTimeout(function() {
+				window.location.reload();
+			}, 500);
+		} else {
+			alert("Asegúrate de que todos los campos estén correctamente llenados y validados.");
+		}
+	}
+	
+	
+
+
