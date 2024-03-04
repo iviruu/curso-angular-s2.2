@@ -75,6 +75,8 @@ var cart = [];
 var total = 0;
 
 const listaCompra = document.getElementById('cart_list');
+const total_price = document.getElementById('total_price');
+const count_product = document.getElementById('count_product');
 // Exercise 1 añado el descuento para usar en mas adelante 
 function buy(id) {
     let objeto = products.find(elemento => elemento.id === id)
@@ -86,13 +88,16 @@ function buy(id) {
         cart.push({...objeto, cantidad : 1, conDescuento : 0});
     }
     applyPromotionsCart(cart)
+    count_product.innerText = `${cart.length}`
 }
 
 
 // Exercise 2
 function cleanCart() {
     cart.length = 0;
-    listaCompra.innerHTML= ''
+    listaCompra.innerHTML= '';
+    total_price.innerText= '0';
+    count_product.innerText = '0';
 }
 
 // Exercise 3 añado la promo de exercici 4 a calculacion total 
@@ -102,15 +107,15 @@ function calculateTotal(cart) {
     cart.forEach(objetoInCart => {
         total += objetoInCart.cantidad * objetoInCart.conDescuento
     });
-    return total;
+    return total =Math.round(total * 100) / 100 ;
+    
 }
 
 // Exercise 4
 function applyPromotionsCart(cart) {
     cart.forEach(elemento => {
         if (elemento.offer && elemento.cantidad >= elemento.offer.number){
-            conDescuento1= elemento.price - (elemento.price * elemento.offer.percent/100)
-            elemento.conDescuento= parseFloat(conDescuento1.toFixed(2))
+            elemento.conDescuento= elemento.price - (elemento.price * elemento.offer.percent/100)
         }
         else {
             elemento.conDescuento = elemento.price
@@ -120,17 +125,22 @@ function applyPromotionsCart(cart) {
 
 // Exercise 5
 function printCart() {
+
     listaCompra.innerHTML= ''
+    total_price.innerText= ''
     cart.forEach(producto => {
+        let totalDescuento = producto.conDescuento*producto.cantidad;
+        let redondeo = Math.round(totalDescuento * 100) / 100;
         const tr = document.createElement('tr');
         tr.innerHTML = `
         <th scope="row">${producto.name}</th>
 		<td>${producto.price}</td>
 		<td>${producto.cantidad}</td>
-		<td>${producto.conDescuento*producto.cantidad}</td>
+		<td>${redondeo}</td>
         `;
         listaCompra.appendChild(tr)
     })
+    total_price.innerText= `${calculateTotal(cart)}`
 }
 
 
